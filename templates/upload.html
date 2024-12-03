@@ -1,10 +1,10 @@
 {% include "header.html" %}
 <div style="float: left">
   {% if pasta.content != "" %}
-  <button id="copy-text-button" class="small-button" style="margin-right:
+  <!--<button id="copy-text-button" class="small-button" style="margin-right:
   0.5rem">
     Copy Text
-  </button>
+  </button>-->
 
   {% if args.public_path_as_str() != "" && pasta.pasta_type == "url" %}
   <button id="copy-redirect-button" class="small-button" style="margin-right:
@@ -70,18 +70,12 @@ justify-content: center; align-items: center;">
 {% if pasta.content != "" %}
 <div class="code-container">
   <div style="clear: both;">
-    {% if pasta.extension == "auto" || pasta.encrypt_client %}
     <pre><code id="code">{{pasta.content_escaped()}}</code></pre>
-    {% else if args.highlightsyntax %}
-    <pre><code id="code">{{pasta.content_syntax_highlighted()}}</code></pre>
-    {% else %}
-    <pre><code id="code">{{pasta.content_not_highlighted()}}</code></pre>
-    {%- endif %}
   </div>
 </div>
 {%- endif %}
 
-{% if pasta.file.is_some() && !pasta.file_embeddable() && !pasta.encrypt_client %}
+<!--{% if pasta.file.is_some() && !pasta.file_embeddable() && !pasta.encrypt_client %}
 <span style="margin-left: auto; margin-right: auto; display: flex;
     justify-content: center; align-items: center;">
   <p style="font-size: small;">{{pasta.file.as_ref().unwrap().name()}}
@@ -124,7 +118,7 @@ pasta.file_embeddable() && !pasta.encrypt_client %}
     </button>
   </a>
 </span>
-{%- endif %}
+{%- endif %}-->
 
 <div>
   {% if args.show_read_stats %} {% if pasta.read_count == 1 %}
@@ -146,7 +140,7 @@ pasta.file_embeddable() && !pasta.encrypt_client %}
   const copyURLBtn = document.getElementById("copy-url-button")
   const copyTextBtn = document.getElementById("copy-text-button")
   const copyRedirectBtn = document.getElementById("copy-redirect-button")
-  var content = `{{ pasta.content_escaped() }}`
+  var content = ``
   const contentElement = document.getElementById("code");
   const url = (`{{ args.short_path_as_str()}}` === "") ? `{{ args.public_path_as_str() }}/upload/{{pasta.id_as_animals()}}` : `{{ args.short_path_as_str()}}/p/{{pasta.id_as_animals()}}`
   const redirect_url = (`{{ args.short_path_as_str()}}` === "") ? `{{ args.public_path_as_str() }}/url/{{pasta.id_as_animals()}}` : `{{ args.short_path_as_str()}}/u/{{pasta.id_as_animals()}}`
@@ -154,12 +148,12 @@ pasta.file_embeddable() && !pasta.encrypt_client %}
   const te = new TextEncoder();
 
   // {% if pasta.extension == "auto" && !pasta.encrypt_client %}
-  onload = (event) => {
+  /*onload = (event) => {
     contentElement.innerHTML = content;
     hljs.highlightAll();
     contentElement.innerHTML =
       wrapStringInCodeLines(contentElement.innerHTML);
-  };
+  };*/
   // {% endif %}
 
 

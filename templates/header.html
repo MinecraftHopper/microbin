@@ -13,12 +13,11 @@
     <link rel="icon" type="image/svg+xml" href="{{ args.public_path_as_str()    }}/static/favicon.ico">
 
     <script type="text/javascript" src="{{ args.public_path_as_str() }}/static/aes.js"></script>
-    {% if !args.pure_html %} {% if args.custom_css.as_ref().is_none() ||
-    args.custom_css.as_ref().unwrap() == "" %}
     <link rel="stylesheet" href="{{ args.public_path_as_str() }}/static/water.css">
-    {%- else %}
+    <link rel="stylesheet" href="{{ args.public_path_as_str() }}/static/overrides.css">
+    {% if !args.custom_css.as_ref().is_none() && args.custom_css.as_ref().unwrap() != "" %}
     <link rel="stylesheet" href="{{ args.custom_css.as_ref().unwrap() }}">
-    {%- endif %} {%- endif %}
+    {%- endif %}
 
 </head>
 {% if args.wide %}
@@ -51,8 +50,8 @@ padding-right:0.5rem; line-height: 1.5; font-size: 1.1em; padding-top: 2rem;">
             <a href="{{ args.public_path_as_str() }}/list" style="margin-right: 0.5rem; margin-left: 0.5rem">List</a>
             {%- endif %}
 
-            <a href="{{ args.public_path_as_str() }}/guide" style="margin-right: 0.5rem;
-            margin-left: 0.5rem">Guide</a>
+            <!--<a href="{{ args.public_path_as_str() }}/guide" style="margin-right: 0.5rem;
+            margin-left: 0.5rem">Guide</a>-->
 
 
         </div>
