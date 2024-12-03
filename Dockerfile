@@ -14,7 +14,7 @@ RUN \
   cargo build --release
 
 # https://hub.docker.com/r/bitnami/minideb
-FROM bitnami/minideb:latest
+FROM bitnami/minideb:latest AS final
 
 # microbin will be in /app
 WORKDIR /app
