@@ -246,9 +246,9 @@ impl Pasta {
         html_escape::encode_text(
             &self
                 .content
-                .replace('\\', "\\\\")
-                .replace('`', "\\`")
-                .replace('$', "\\$"),
+                //.replace('\\', "\\\\")
+                //.replace('`', "\\`")
+                //.replace('$', "\\$"),
         )
         .to_string()
     }
