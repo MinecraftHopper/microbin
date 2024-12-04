@@ -1,17 +1,26 @@
-FROM rust:latest AS build
+FROM --platform=$BUILDPLATFORM rust:latest AS build
+
+ARG TARGETPLATFORM
+ARG TARGETARCH
 
 WORKDIR /app
 
 RUN \
   DEBIAN_FRONTEND=noninteractive \
-  apt-get update &&\
-  apt-get -y install ca-certificates tzdata
+  apt-get update && \
+  apt-get -y install ca-certificates tzdata && \
+  if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then apt install -y g++-aarch64-linux-gnu; fi;
+
+ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 COPY . .
 
-RUN \
-  CARGO_NET_GIT_FETCH_WITH_CLI=true \
-  cargo build --release
+RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
+        rustup target add aarch64-unknown-linux-gnu && \
+        cargo build --target aarch64-unknown-linux-gnu --release; \
+    else \ 
+        cargo build --release; \
+    fi
 
 # https://hub.docker.com/r/bitnami/minideb
 FROM bitnami/minideb:latest AS final
