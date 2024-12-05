@@ -9,7 +9,9 @@ RUN \
   DEBIAN_FRONTEND=noninteractive \
   apt-get update && \
   apt-get -y install ca-certificates tzdata && \
-  if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then apt install -y g++-aarch64-linux-gnu; fi;
+  if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
+      apt install -y g++-aarch64-linux-gnu; \
+  fi;
 
 ENV CARGO_NET_GIT_FETCH_WITH_CLI=true
 
@@ -21,6 +23,8 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
     else \ 
         cargo build --release; \
     fi
+
+RUN ls -l target/release
 
 # https://hub.docker.com/r/bitnami/minideb
 FROM bitnami/minideb:latest AS final
@@ -41,7 +45,7 @@ COPY --from=build \
 
 # copy built executable
 COPY --from=build \
-  /app/target/release/microbin \
+  /app/target/*/microbin \
   /usr/bin/microbin
 
 # Expose webport used for the webserver to the docker runtime
